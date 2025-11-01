@@ -8,7 +8,7 @@ app = Flask(__name__)
 @app.route('/')
 def hello_world():
     """Serves the home page."""
-    return '<h1>Hello, World!</h1><p>Your Flask app is running.</p>'
+    return '<h1>Hello, World!</h1><p>FROM Automated CI/CD.</p>'
 
 # Define a second route
 @app.route('/about')
