@@ -1,0 +1,43 @@
+steps:
+# 1. Build the Docker image
+- name: 'gcr.io/cloud-builders/docker'
+  args:
+    - 'build'
+    - '-t'
+    # This tags the image with the specific Git commit ID (e.g., 'a1b2c3d')
+    # This is our new "version number"!
+    - 'asia-south1-docker.pkg.dev/coherent-server-475300-m1/my-devops-re-repo/final-review-app:$SHORT_SHA'
+    - '.'
+
+# 2. Push the image to Artifact Registry
+- name: 'gcr.io/cloud-builders/docker'
+  args:
+    - 'push'
+    - 'asia-south1-docker.pkg.dev/coherent-server-475300-m1/my-devops-re-repo/final-review-app:$SHORT_SHA'
+
+# 3. Connect to our GKE cluster
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  entrypoint: gcloud
+  args:
+    - 'container'
+    - 'clusters'
+    - 'get-credentials'
+    - 'my-cluster'
+    - '--zone=us-central1-c'
+    - '--project=coherent-server-475300-m1'
+
+# 4. Deploy the new image to GKE
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  entrypoint: kubectl
+  args:
+    - 'set'
+    - 'image'
+    - 'deployment/my-web-app'
+    # This tells kubectl: "Find the deployment 'my-web-app',
+    # find the container 'my-app-container',
+    # and set its image to our newly pushed version."
+    - 'my-app-container=asia-south1-docker.pkg.dev/coherent-server-475300-m1/my-devops-re-repo/final-review-app:$SHORT_SHA'
+
+# This tells Cloud Build to list the new image in the build summary
+images:
+- 'asia-south1-docker.pkg.dev/coherent-server-475300-m1/my-devops-re-repo/final-review-app:$SHORT_SHA'

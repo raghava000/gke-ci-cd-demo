@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-web-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: web
+  template:
+    metadata:
+      labels:
+        app: web
+    spec:
+      containers:
+      - name: my-app-container
+        # IMPORTANT: Replace this with YOUR image path
+        image: asia-south1-docker.pkg.dev/coherent-server-475300-m1/my-devops-re-repo/final-review-app:v2.0.0
+        ports:
+        - containerPort: 5000
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
