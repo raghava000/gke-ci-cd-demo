@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-web-service
+spec:
+  # This tells GCP to create an external load balancer
+  type: LoadBalancer
+
+  # This MUST match the 'app: web' label in your deployment.yaml
+  selector:
+    app: web
+
+  ports:
+  - protocol: TCP
+    # port: 80 is the standard web port (HTTP)
+    port: 80
+
+    # targetPort: 5000 is the port your Python app is running on
+    targetPort: 5000

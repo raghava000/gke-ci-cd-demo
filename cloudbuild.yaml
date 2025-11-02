@@ -26,6 +26,13 @@ steps:
     - '--zone=us-central1'
     - '--project=coherent-server-475300-m1'
 
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  entrypoint: kubectl
+  args:
+    - 'apply'
+    - '-f'
+    - 'service.yaml'
+
 # 4. Deploy the new image to GKE
 - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
   entrypoint: kubectl
