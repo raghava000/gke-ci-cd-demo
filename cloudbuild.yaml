@@ -41,3 +41,7 @@ steps:
 # This tells Cloud Build to list the new image in the build summary
 images:
 - 'asia-south1-docker.pkg.dev/coherent-server-475300-m1/my-devops-re-repo/final-review-app:$SHORT_SHA'
+
+options:
+  logging: CLOUD_LOGGING_ONLY
+
