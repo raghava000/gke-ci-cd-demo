@@ -23,7 +23,7 @@ steps:
     - 'clusters'
     - 'get-credentials'
     - 'my-cluster'
-    - '--zone=us-central1-c'
+    - '--zone=us-central1'
     - '--project=coherent-server-475300-m1'
 
 # 4. Deploy the new image to GKE
